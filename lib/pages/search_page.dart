@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:weather_app/models/weather_model.dart';
 
+import '../providers/weather_provider.dart';
 import '../services/weather_service.dart';
 
 // ignore: must_be_immutable
 class SearchPage extends StatelessWidget {
-  SearchPage({Key? key}) : super(key: key);
   String? cityName;
+  SearchPage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,12 +19,17 @@ class SearchPage extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: TextField(
-            onSubmitted: (data) {
+            onSubmitted: (data) async {
               cityName = data;
 
               WeatherService service = WeatherService();
 
-              service.getWeather(cityName: cityName!);
+              WeatherModel weather =
+                  await service.getWeather(cityName: cityName!);
+
+              Provider.of<WeatherProvider>(context, listen: false).weather =
+                  weather;
+              Navigator.pop(context);
             },
             decoration: const InputDecoration(
               contentPadding:
