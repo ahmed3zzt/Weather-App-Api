@@ -20,6 +20,8 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Weather App'),
+        backgroundColor:
+            weatherProvider.weather?.getStateTheme() ?? Colors.white,
         actions: [
           IconButton(
               onPressed: () {
@@ -49,71 +51,84 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             )
-          : Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Spacer(
-                  flex: 3,
-                ),
-                Text(
-                  '${weatherProvider.cityName}',
-                  style: const TextStyle(
-                    fontSize: 32,
-                    fontWeight: FontWeight.bold,
+          : Container(
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                colors: [
+                  weatherProvider.weather!.getStateTheme(),
+                  weatherProvider.weather!.getStateTheme().withAlpha(150),
+                  weatherProvider.weather!.getStateTheme().withAlpha(120),
+                  weatherProvider.weather!.getStateTheme().withAlpha(100),
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              )),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Spacer(
+                    flex: 3,
                   ),
-                ),
-                Text(
-                  weatherProvider.weather!.date,
-                  style: const TextStyle(
-                    fontSize: 18,
-                  ),
-                ),
-                const Spacer(
-                  flex: 1,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Image.asset(weatherProvider.weather!.getState()),
-                    Text(
-                      '${weatherProvider.weather!.temp}',
-                      style: const TextStyle(
-                        fontSize: 32,
-                        fontWeight: FontWeight.bold,
-                      ),
+                  Text(
+                    '${weatherProvider.cityName}',
+                    style: const TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
                     ),
-                    Column(
-                      children: [
-                        Text(
-                          'Max Temp : ${weatherProvider.weather!.maxTemp}',
-                          style: const TextStyle(
-                            fontSize: 18,
-                          ),
-                        ),
-                        Text(
-                          'Min Temp : ${weatherProvider.weather!.minTemp}',
-                          style: const TextStyle(
-                            fontSize: 18,
-                          ),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-                const Spacer(
-                  flex: 1,
-                ),
-                Text(
-                  weatherProvider.weather!.weatherStateName,
-                  style: const TextStyle(
-                    fontSize: 32,
-                    fontWeight: FontWeight.bold,
                   ),
-                ),
-                const Spacer(
-                  flex: 5,
-                )
-              ],
+                  Text(
+                    weatherProvider.weather!.date,
+                    style: const TextStyle(
+                      fontSize: 18,
+                    ),
+                  ),
+                  const Spacer(
+                    flex: 1,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Image.asset(weatherProvider.weather!.getStateImage()),
+                      Text(
+                        '${weatherProvider.weather!.temp}',
+                        style: const TextStyle(
+                          fontSize: 32,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Column(
+                        children: [
+                          Text(
+                            'Max Temp : ${weatherProvider.weather!.maxTemp}',
+                            style: const TextStyle(
+                              fontSize: 18,
+                            ),
+                          ),
+                          Text(
+                            'Min Temp : ${weatherProvider.weather!.minTemp}',
+                            style: const TextStyle(
+                              fontSize: 18,
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                  const Spacer(
+                    flex: 1,
+                  ),
+                  Text(
+                    weatherProvider.weather!.weatherStateName,
+                    style: const TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const Spacer(
+                    flex: 5,
+                  )
+                ],
+              ),
             ),
     );
   }

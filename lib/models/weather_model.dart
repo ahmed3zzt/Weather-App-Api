@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class WeatherModel {
   String date;
   double temp;
@@ -14,17 +16,30 @@ class WeatherModel {
   });
 
   factory WeatherModel.fromJson(dynamic data) {
-    var jsonData = data['forecast']['forecastday'][0]['day'];
+    WeatherModel? weatherModel;
+    try {
+      var jsonData;
+      jsonData = data['forecast']['forecastday'][0]['day'];
 
-    return WeatherModel(
-        date: data["location"]['localtime'],
-        temp: jsonData['avgtemp_c'],
-        minTemp: jsonData['mintemp_c'],
-        maxTemp: jsonData['maxtemp_c'],
-        weatherStateName: jsonData['condition']['text']);
+      weatherModel = WeatherModel(
+          date: data["location"]['localtime'],
+          temp: jsonData['avgtemp_c'],
+          minTemp: jsonData['mintemp_c'],
+          maxTemp: jsonData['maxtemp_c'],
+          weatherStateName: jsonData['condition']['text']);
+    } catch (e) {
+      print("Value Error");
+    }
+    return weatherModel ??
+        WeatherModel(
+            date: "0000",
+            temp: 00.00,
+            minTemp: 00.00,
+            maxTemp: 00.00,
+            weatherStateName: "Unknown City");
   }
 
-  String getState() {
+  String getStateImage() {
     switch (weatherStateName) {
       case "Sunny":
         return "assets/images/clear.png";
@@ -42,6 +57,27 @@ class WeatherModel {
         return "assets/images/rainy.png";
       default:
         return "assets/images/clear.png";
+    }
+  }
+
+  Color getStateTheme() {
+    switch (weatherStateName) {
+      case "Sunny":
+        return Colors.yellow;
+      case "Cloudy":
+        return Colors.grey;
+      case "Party Cloudy":
+        return Colors.white;
+      case "Rain":
+        return Colors.blue;
+      case "Snow":
+        return Colors.cyan;
+      case "Clear":
+        return Colors.yellow;
+      case "Patchy rain possible":
+        return Colors.cyan;
+      default:
+        return Colors.yellow;
     }
   }
 
