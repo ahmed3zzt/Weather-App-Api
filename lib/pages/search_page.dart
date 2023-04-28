@@ -11,6 +11,8 @@ class SearchPage extends StatelessWidget {
   SearchPage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    WeatherProvider weatherProvider =
+        Provider.of<WeatherProvider>(context, listen: true);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Search City'),
@@ -27,8 +29,8 @@ class SearchPage extends StatelessWidget {
               WeatherModel weather =
                   await service.getWeather(cityName: cityName!);
 
-              Provider.of<WeatherProvider>(context, listen: false).weather =
-                  weather;
+              weatherProvider.cityName = cityName;
+              weatherProvider.weather = weather;
               Navigator.pop(context);
             },
             decoration: const InputDecoration(

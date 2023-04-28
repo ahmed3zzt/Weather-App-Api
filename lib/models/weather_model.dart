@@ -24,6 +24,27 @@ class WeatherModel {
         weatherStateName: jsonData['condition']['text']);
   }
 
+  String getState() {
+    switch (weatherStateName) {
+      case "Sunny":
+        return "assets/images/clear.png";
+      case "Cloudy":
+        return "assets/images/cloudy.png";
+      case "Party Cloudy":
+        return "assets/images/cloudy.png";
+      case "Rain":
+        return "assets/images/rainy.png";
+      case "Snow":
+        return "assets/images/snow.png";
+      case "Clear":
+        return "assets/images/clear.png";
+      case "Patchy rain possible":
+        return "assets/images/rainy.png";
+      default:
+        return "assets/images/clear.png";
+    }
+  }
+
   @override
   String toString() {
     return 'tem = $temp , minTemp = $minTemp';
