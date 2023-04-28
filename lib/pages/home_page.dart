@@ -58,7 +58,6 @@ class _HomePageState extends State<HomePage> {
                   weatherProvider.weather!.getStateTheme(),
                   weatherProvider.weather!.getStateTheme().withAlpha(150),
                   weatherProvider.weather!.getStateTheme().withAlpha(120),
-                  weatherProvider.weather!.getStateTheme().withAlpha(100),
                 ],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
@@ -77,7 +76,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   Text(
-                    weatherProvider.weather!.date,
+                    'Updated At  ${weatherProvider.weather!.date.hour}:${weatherProvider.weather!.date.hour}',
                     style: const TextStyle(
                       fontSize: 18,
                     ),

@@ -21,13 +21,16 @@ class SearchPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("You Can Search City by Arabic and English Name"),
-            SizedBox(
+            const Text("You Can Search City by Arabic and English Name"),
+            const SizedBox(
               height: 10,
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(
+                onChanged: (data) {
+                  cityName = data;
+                },
                 onSubmitted: (data) async {
                   cityName = data;
 
@@ -40,12 +43,24 @@ class SearchPage extends StatelessWidget {
                   weatherProvider.weather = weather;
                   Navigator.pop(context);
                 },
-                decoration: const InputDecoration(
-                  contentPadding:
-                      EdgeInsets.symmetric(horizontal: 16.0, vertical: 25),
-                  label: Text("Search"),
-                  border: OutlineInputBorder(),
-                  suffixIcon: Icon(Icons.search),
+                decoration: InputDecoration(
+                  contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 16.0, vertical: 25),
+                  label: const Text("Search"),
+                  border: const OutlineInputBorder(),
+                  suffixIcon: IconButton(
+                    icon: const Icon(Icons.search),
+                    onPressed: () async {
+                      WeatherService service = WeatherService();
+
+                      WeatherModel weather =
+                          await service.getWeather(cityName: cityName!);
+
+                      weatherProvider.cityName = cityName;
+                      weatherProvider.weather = weather;
+                      Navigator.pop(context);
+                    },
+                  ),
                   hintText: "Enter City",
                 ),
               ),
